@@ -30,90 +30,89 @@
 #define _DAP_CONFIG_H_
 
 /*- Includes ----------------------------------------------------------------*/
-#include "samd21.h"
-#include "hal_gpio.h"
+#include "samd51.h"
+#include "swd_hal_gpio.h"
 
 /*- Definitions -------------------------------------------------------------*/
-HAL_GPIO_PIN(SWCLK,    B, 0)
-HAL_GPIO_PIN(SWDIO,    B, 1)
+HAL_GPIO_PIN(SWCLK, B, 8)
+HAL_GPIO_PIN(SWDIO, B, 9)
 
-#define DAP_CONFIG_CLOCK_DELAY   10
+#define DAP_CONFIG_CLOCK_DELAY 10
 
 /*- Implementations ---------------------------------------------------------*/
 
 //-----------------------------------------------------------------------------
 static inline void DAP_CONFIG_SWCLK_write(int value)
 {
-  HAL_GPIO_SWCLK_write(value);
+    HAL_GPIO_SWCLK_write(value);
 }
 
 //-----------------------------------------------------------------------------
 static inline void DAP_CONFIG_SWDIO_write(int value)
 {
-  HAL_GPIO_SWDIO_write(value);
+    HAL_GPIO_SWDIO_write(value);
 }
 
 //-----------------------------------------------------------------------------
 static inline int DAP_CONFIG_SWCLK_read(void)
 {
-  return HAL_GPIO_SWCLK_read();
+    return HAL_GPIO_SWCLK_read();
 }
 
 //-----------------------------------------------------------------------------
 static inline int DAP_CONFIG_SWDIO_read(void)
 {
-  return HAL_GPIO_SWDIO_read();
+    return HAL_GPIO_SWDIO_read();
 }
 
 //-----------------------------------------------------------------------------
 static inline void DAP_CONFIG_SWCLK_set(void)
 {
-  HAL_GPIO_SWCLK_set();
+    HAL_GPIO_SWCLK_set();
 }
 
 //-----------------------------------------------------------------------------
 static inline void DAP_CONFIG_SWCLK_clr(void)
 {
-  HAL_GPIO_SWCLK_clr();
+    HAL_GPIO_SWCLK_clr();
 }
 
 //-----------------------------------------------------------------------------
 static inline void DAP_CONFIG_SWDIO_in(void)
 {
-  HAL_GPIO_SWDIO_in();
+    HAL_GPIO_SWDIO_in();
 }
 
 //-----------------------------------------------------------------------------
 static inline void DAP_CONFIG_SWDIO_out(void)
 {
-  HAL_GPIO_SWDIO_out();
+    HAL_GPIO_SWDIO_out();
 }
 
 //-----------------------------------------------------------------------------
 static inline void DAP_CONFIG_SETUP(void)
 {
-  HAL_GPIO_SWCLK_in();
+    HAL_GPIO_SWCLK_in();
 
-  HAL_GPIO_SWDIO_in();
-  HAL_GPIO_SWDIO_pullup();
+    HAL_GPIO_SWDIO_in();
+    HAL_GPIO_SWDIO_pullup();
 }
 
 //-----------------------------------------------------------------------------
 static inline void DAP_CONFIG_DISCONNECT(void)
 {
-  HAL_GPIO_SWCLK_in();
-  HAL_GPIO_SWDIO_in();
+    HAL_GPIO_SWCLK_in();
+    HAL_GPIO_SWDIO_in();
 }
 
 //-----------------------------------------------------------------------------
 static inline void DAP_CONFIG_CONNECT_SWD(void)
 {
-  HAL_GPIO_SWDIO_out();
-  HAL_GPIO_SWDIO_set();
+    HAL_GPIO_SWDIO_out();
+    HAL_GPIO_SWDIO_set();
 
-  HAL_GPIO_SWCLK_out();
-  HAL_GPIO_SWCLK_set();
+    HAL_GPIO_SWCLK_out();
+    HAL_GPIO_SWCLK_set();
 }
 
 #endif // _DAP_CONFIG_H_
-
