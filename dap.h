@@ -32,16 +32,18 @@
 /*- Includes ----------------------------------------------------------------*/
 #include <stdint.h>
 
-/*- Prototypes --------------------------------------------------------------*/
-#define TARGET_ROW_SIZE    256
-#define TARGET_PAGE_SIZE   64
+/*- Defines --------------------------------------------------------------*/
+#define DAP_ERROR_OK 0
+#define DAP_ERROR_TIMEOUT 1
 
 /*- Prototypes --------------------------------------------------------------*/
 void dap_init(void);
 void dap_connect(void);
 void dap_disconnect(void);
 uint32_t dap_read_word(uint32_t addr);
+uint16_t dap_read_hword(uint32_t addr);
 void dap_write_word(uint32_t addr, uint32_t data);
+void dap_write_hword(uint32_t addr, uint16_t data);
 void dap_reset_link(void);
 uint32_t dap_read_idcode(void);
 void dap_target_prepare(void);
@@ -52,8 +54,5 @@ void dap_target_deselect(void);
 void dap_target_erase(void);
 void dap_target_lock(void);
 void dap_target_erase_row(uint32_t addr);
-void dap_target_write_page(uint32_t addr, uint8_t *data);
-void dap_target_read_page(uint32_t addr, uint8_t *data);
 
 #endif // _DAP_H_
-
