@@ -392,7 +392,7 @@ uint32_t dap_read_idcode(void)
 #define AP_CSW_Size_MASK 0x00000003
 
 //-----------------------------------------------------------------------------
-void dap_target_prepare(void)
+bool dap_target_prepare(int32_t timeout)
 {
     dap_write_reg(SWD_DP_W_ABORT, 0x00000016);
     dap_write_reg(SWD_DP_W_SELECT, 0x00000000);
@@ -400,10 +400,16 @@ void dap_target_prepare(void)
     // 0x50000000 Ask for SYS and DBG power up
     dap_write_reg(SWD_DP_W_CTRL_STAT, 0x50000000);
     // Wait for power up
-    uint32_t res = 0;
-    do {
-        dap_read_reg(SWD_DP_W_CTRL_STAT, &res);
-    } while ((res & 0xf0000000) != 0xf0000000);
+    uint32_t ctrl_stat = 0;
+    bool res = false;
+    while (timeout-- != 0) {
+        dap_read_reg(SWD_DP_W_CTRL_STAT, &ctrl_stat);
+        if ((ctrl_stat & 0xf0000000) == 0xf0000000) {
+            res = true;
+            break;
+        }
+    }
+    if (res != true) return res;
 
     // SWD_AP_CSW is 0x03000040 on reset (DA14531)
     //                  |    | `- Byte addressing
@@ -412,4 +418,5 @@ void dap_target_prepare(void)
     // dap_write_reg(SWD_AP_CSW, 0x23000052);
     // 32 bit addressing
     dap_write_reg(SWD_AP_CSW, 0x03000002);
+    return true;
 }
