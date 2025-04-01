@@ -30,6 +30,7 @@
 #define _DAP_H_
 
 /*- Includes ----------------------------------------------------------------*/
+#include <stdbool.h>
 #include <stdint.h>
 
 /*- Defines --------------------------------------------------------------*/
@@ -46,7 +47,7 @@ void dap_write_word(uint32_t addr, uint32_t data);
 void dap_write_hword(uint32_t addr, uint16_t data);
 void dap_reset_link(void);
 uint32_t dap_read_idcode(void);
-void dap_target_prepare(void);
+bool dap_target_prepare(int32_t timeout);
 
 // Target operations
 void dap_target_select(void);
